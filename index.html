@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ===== CSS كامل مع قسم الفيديو ===== */
+        /* ===== CSS كامل مع قسم الفيديو ورقم السري ===== */
         :root {
             --primary-color: #ff4d8d;
             --secondary-color: #ff9ec0;
@@ -40,6 +40,148 @@
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
+        }
+
+        /* ===== صفحة رقم السري ===== */
+        #password-protection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #password-protection.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .password-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .password-icon {
+            font-size: 5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .password-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .password-subtitle {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .password-form {
+            margin: 2rem 0;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            letter-spacing: 0.5rem;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 77, 141, 0.1);
+            box-shadow: 0 0 20px rgba(255, 77, 141, 0.3);
+        }
+
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: normal;
+        }
+
+        .password-btn {
+            background: var(--gradient);
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+            font-weight: 600;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 77, 141, 0.4);
+        }
+
+        .password-hint {
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .password-hint.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .password-attempts {
+            color: var(--secondary-color);
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        #attempts-count {
+            color: var(--accent-color);
+            font-weight: bold;
         }
 
         /* ===== خلفية النجوم المتحركة ===== */
@@ -88,6 +230,11 @@
             background-repeat: no-repeat;
             background-position: bottom;
             transition: var(--transition);
+            display: none; /* مخفي حتى يتم إدخال الرقم السري */
+        }
+
+        .navbar.active {
+            display: block;
         }
 
         .navbar.scrolled {
@@ -184,6 +331,11 @@
             padding: 6rem 2rem 4rem;
             position: relative;
             overflow: hidden;
+            display: none; /* مخفي حتى يتم إدخال الرقم السري */
+        }
+
+        .hero.active {
+            display: flex;
         }
 
         .hero::before {
@@ -387,6 +539,11 @@
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            display: none; /* مخفي حتى يتم إدخال الرقم السري */
+        }
+
+        .video-section.active {
+            display: block;
         }
 
         .video-container {
@@ -539,6 +696,11 @@
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            display: none; /* مخفي حتى يتم إدخال الرقم السري */
+        }
+
+        .section.active {
+            display: block;
         }
 
         .section-title {
@@ -1175,6 +1337,11 @@
             margin-top: 6rem;
             position: relative;
             overflow: hidden;
+            display: none; /* مخفي حتى يتم إدخال الرقم السري */
+        }
+
+        footer.active {
+            display: block;
         }
 
         footer::before {
@@ -1424,6 +1591,9 @@
             .hero-buttons { flex-direction: column; align-items: center; }
             .love-btn, .music-btn, .video-btn { width: 100%; max-width: 300px; }
             .video-title { font-size: 2rem; }
+            .password-container { padding: 2rem; }
+            .password-title { font-size: 2rem; }
+            .password-icon { font-size: 4rem; }
         }
 
         @media (max-width: 768px) {
@@ -1451,6 +1621,9 @@
             .footer-info { flex-direction: column; text-align: center; }
             .video-controls { flex-direction: column; align-items: center; }
             .control-btn { width: 100%; max-width: 200px; }
+            .password-container { padding: 1.5rem; }
+            .password-input { font-size: 1.2rem; padding: 1rem; }
+            .password-btn { padding: 1rem 2rem; font-size: 1.1rem; }
         }
 
         @media (max-width: 480px) {
@@ -1463,333 +1636,392 @@
             .video-container { padding: 1.5rem; }
             .video-title { font-size: 1.8rem; }
             .play-button { width: 60px; height: 60px; font-size: 2rem; }
+            .password-container { padding: 1rem; }
+            .password-title { font-size: 1.8rem; }
+            .password-icon { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
-    <!-- ===== HTML كامل مع قسم الفيديو ===== -->
-    <div class="stars"></div>
-    <div class="stars2"></div>
-    <div class="stars3"></div>
-
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">قمر حياتي ❤️</a>
-            <div class="hamburger" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" onclick="closeMenu()"><i class="fas fa-home"></i> الرئيسية</a></li>
-                <li><a href="#video-section" onclick="closeMenu()"><i class="fas fa-video"></i> فيديو حب</a></li>
-                <li><a href="#love-letters" onclick="closeMenu()"><i class="fas fa-heart"></i> رسائلي</a></li>
-                <li><a href="#gallery" onclick="closeMenu()"><i class="fas fa-images"></i> ذكرياتنا</a></li>
-                <li><a href="#timeline" onclick="closeMenu()"><i class="fas fa-history"></i> خط زمني</a></li>
-                <li><a href="#future" onclick="closeMenu()"><i class="fas fa-gift"></i> مستقبلنا</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="heart-pulse">❤️</div>
-            <h1 class="typewriter">إلى حبيبتي <span class="highlight">قمر حياتي</span></h1>
-            <p class="subtitle">هذا الموقع هدية من القلب إلى القلب، لتكون شهادة على حب لا يعرف حدودًا</p>
-            
-            <div class="hero-buttons">
-                <button class="love-btn" onclick="showLoveMessage()">
-                    <i class="fas fa-heart"></i> اضغط هنا لرسالة حب
-                </button>
-                
-                <button class="music-btn" onclick="toggleMusic()">
-                    <i class="fas fa-music" id="music-icon"></i> <span id="music-text">تشغيل الموسيقى</span>
-                </button>
-                
-                <button class="video-btn" onclick="scrollToSection('video-section')">
-                    <i class="fas fa-video"></i> شاهد فيديو حبنا
-                </button>
+    <!-- ===== صفحة رقم السري ===== -->
+    <div id="password-protection">
+        <div class="password-container">
+            <div class="password-icon">
+                <i class="fas fa-lock"></i>
             </div>
             
-            <div id="floating-message" class="floating-message">
-                <p>أحبك أكثر من أي كلمة يمكن أن تعبر ❤️</p>
+            <h1 class="password-title">مرحبًا بكِ يا قمر حياتي ❤️</h1>
+            
+            <p class="password-subtitle">
+                هذا الموقع هدية خاصة من القلب إليكِ<br>
+                أدخلي الرقم السري لترى ما أعددته لكِ
+            </p>
+            
+            <div class="password-form">
+                <input type="password" 
+                       id="password-input" 
+                       class="password-input" 
+                       placeholder="أدخلي الرقم السري"
+                       maxlength="4"
+                       onkeypress="return isNumber(event)">
+                
+                <button class="password-btn" onclick="checkPassword()">
+                    <i class="fas fa-key"></i>
+                    دخول إلى عالم الحب
+                </button>
+                
+                <p class="password-hint" id="password-hint">
+                    الرقم السري هو تاريخ مهم في حياتنا ❤️
+                </p>
+                
+                <div class="password-attempts">
+                    المحاولات المتبقية: <span id="attempts-count">3</span>
+                </div>
             </div>
             
-            <audio id="love-music" loop>
-                <source src="https://assets.mixkit.co/music/preview/mixkit-loving-you-117.mp3" type="audio/mpeg">
-            </audio>
+            <p style="color: rgba(255, 255, 255, 0.4); margin-top: 2rem; font-size: 0.9rem;">
+                هذه الصفحة مخصصة لكِ وحدكِ، لا أحد غيركِ يعرف الرقم السري
+            </p>
         </div>
-        
-        <div class="scroll-down" onclick="scrollToSection('video-section')">
-            <i class="fas fa-chevron-down"></i>
-        </div>
-    </section>
+    </div>
 
-    <!-- ===== قسم الفيديو الجديد ===== -->
-    <section id="video-section" class="video-section">
-        <h2 class="section-title">فيديو حبنا الخاص ❤️</h2>
-        
-        <div class="video-container">
-            <div class="video-wrapper">
-                <video id="love-video" poster="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
-                    <source src="./aa.mp4" type="video/mp4">
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-in-love-watching-the-sunset-4132-large.mp4" type="video/webm">
-                    متصفحك لا يدعم تشغيل الفيديو
-                </video>
+    <!-- ===== صفحة الموقع الرئيسية ===== -->
+    <div id="website-content" style="display: none;">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#" class="logo">قمر حياتي ❤️</a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" onclick="closeMenu()"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#video-section" onclick="closeMenu()"><i class="fas fa-video"></i> فيديو حب</a></li>
+                    <li><a href="#love-letters" onclick="closeMenu()"><i class="fas fa-heart"></i> رسائلي</a></li>
+                    <li><a href="#gallery" onclick="closeMenu()"><i class="fas fa-images"></i> ذكرياتنا</a></li>
+                    <li><a href="#timeline" onclick="closeMenu()"><i class="fas fa-history"></i> خط زمني</a></li>
+                    <li><a href="#future" onclick="closeMenu()"><i class="fas fa-gift"></i> مستقبلنا</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <div class="heart-pulse">❤️</div>
+                <h1 class="typewriter">إلى حبيبتي <span class="highlight">قمر حياتي</span></h1>
+                <p class="subtitle">هذا الموقع هدية من القلب إلى القلب، لتكون شهادة على حب لا يعرف حدودًا</p>
                 
-                <div class="video-overlay" id="videoOverlay">
-                    <button class="play-button" onclick="playVideo()">
-                        <i class="fas fa-play"></i>
+                <div class="hero-buttons">
+                    <button class="love-btn" onclick="showLoveMessage()">
+                        <i class="fas fa-heart"></i> اضغط هنا لرسالة حب
                     </button>
-                    <h3 class="video-title">قصة حبنا في دقيقة</h3>
-                    <p style="color: var(--secondary-color); text-align: center; font-size: 1.2rem;">
-                        اضغطي على زر التشغيل لمشاهدة فيديو حبنا الخاص
+                    
+                    <button class="music-btn" onclick="toggleMusic()">
+                        <i class="fas fa-music" id="music-icon"></i> <span id="music-text">تشغيل الموسيقى</span>
+                    </button>
+                    
+                    <button class="video-btn" onclick="scrollToSection('video-section')">
+                        <i class="fas fa-video"></i> شاهد فيديو حبنا
+                    </button>
+                </div>
+                
+                <div id="floating-message" class="floating-message">
+                    <p>أحبك أكثر من أي كلمة يمكن أن تعبر ❤️</p>
+                </div>
+                
+                <audio id="love-music" loop>
+                    <source src="https://assets.mixkit.co/music/preview/mixkit-loving-you-117.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+            
+            <div class="scroll-down" onclick="scrollToSection('video-section')">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- ===== قسم الفيديو الجديد ===== -->
+        <section id="video-section" class="video-section">
+            <h2 class="section-title">فيديو حبنا الخاص ❤️</h2>
+            
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <video id="love-video" poster="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <source src="./aa.mp4" type="video/mp4">
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-in-love-watching-the-sunset-4132-large.mp4" type="video/webm">
+                        متصفحك لا يدعم تشغيل الفيديو
+                    </video>
+                    
+                    <div class="video-overlay" id="videoOverlay">
+                        <button class="play-button" onclick="playVideo()">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <h3 class="video-title">قصة حبنا في دقيقة</h3>
+                        <p style="color: var(--secondary-color); text-align: center; font-size: 1.2rem;">
+                            اضغطي على زر التشغيل لمشاهدة فيديو حبنا الخاص
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="video-controls">
+                    <button class="control-btn" onclick="playVideo()">
+                        <i class="fas fa-play"></i> تشغيل
+                    </button>
+                    <button class="control-btn" onclick="pauseVideo()">
+                        <i class="fas fa-pause"></i> إيقاف
+                    </button>
+                    <button class="control-btn" onclick="muteVideo()">
+                        <i class="fas fa-volume-mute"></i> كتم الصوت
+                    </button>
+                    <button class="control-btn" onclick="fullscreenVideo()">
+                        <i class="fas fa-expand"></i> ملء الشاشة
+                    </button>
+                    <button class="control-btn" onclick="downloadVideo()">
+                        <i class="fas fa-download"></i> تحميل الفيديو
+                    </button>
+                </div>
+                
+                <div class="video-description">
+                    <p>هذا الفيديو صنع خصيصًا لكِ، يجمع أجمل لحظاتنا وأحلى ذكرياتنا معًا في دقيقة واحدة من الحب النقي ❤️</p>
+                </div>
+                
+                <div class="video-message">
+                    <p>
+                        "حبيبتي... كما ترين في هذا الفيديو، حبنا ليس مجرد لحظات عابرة، 
+                        بل هو قصة تكتب يومًا بعد يوم، وصورة ترسمها ابتسامتك، 
+                        ولحن يعزفه قلبك في سماء حياتي. 
+                        هذا الفيديو هو مجرد بداية، فقصة حبنا لن تنتهي أبدًا..."
                     </p>
                 </div>
             </div>
-            
-            <div class="video-controls">
-                <button class="control-btn" onclick="playVideo()">
-                    <i class="fas fa-play"></i> تشغيل
-                </button>
-                <button class="control-btn" onclick="pauseVideo()">
-                    <i class="fas fa-pause"></i> إيقاف
-                </button>
-                <button class="control-btn" onclick="muteVideo()">
-                    <i class="fas fa-volume-mute"></i> كتم الصوت
-                </button>
-                <button class="control-btn" onclick="fullscreenVideo()">
-                    <i class="fas fa-expand"></i> ملء الشاشة
-                </button>
-                <button class="control-btn" onclick="downloadVideo()">
-                    <i class="fas fa-download"></i> تحميل الفيديو
-                </button>
-            </div>
-            
-            <div class="video-description">
-                <p>هذا الفيديو صنع خصيصًا لكِ، يجمع أجمل لحظاتنا وأحلى ذكرياتنا معًا في دقيقة واحدة من الحب النقي ❤️</p>
-            </div>
-            
-            <div class="video-message">
-                <p>
-                    "حبيبتي... كما ترين في هذا الفيديو، حبنا ليس مجرد لحظات عابرة، 
-                    بل هو قصة تكتب يومًا بعد يوم، وصورة ترسمها ابتسامتك، 
-                    ولحن يعزفه قلبك في سماء حياتي. 
-                    هذا الفيديو هو مجرد بداية، فقصة حبنا لن تنتهي أبدًا..."
-                </p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="love-letters" class="section">
-        <h2 class="section-title">كلمات من القلب</h2>
-        <div class="letters-container">
-            <div class="letter-card" onclick="openLetter(1)">
-                <div class="letter-icon"><i class="fas fa-envelope-open-text"></i></div>
-                <h3>رسالتي الأولى</h3>
-                <p>حبيبتي خدوجتي القمر...</p>
-                <div class="letter-preview">"ما أقدرش أعيش من غيرك لحظة، ولا من غير صوتك ولا ضحكتك..."</div>
+        <section id="love-letters" class="section">
+            <h2 class="section-title">كلمات من القلب</h2>
+            <div class="letters-container">
+                <div class="letter-card" onclick="openLetter(1)">
+                    <div class="letter-icon"><i class="fas fa-envelope-open-text"></i></div>
+                    <h3>رسالتي الأولى</h3>
+                    <p>حبيبتي خدوجتي القمر...</p>
+                    <div class="letter-preview">"ما أقدرش أعيش من غيرك لحظة، ولا من غير صوتك ولا ضحكتك..."</div>
+                </div>
+                
+                <div class="letter-card" onclick="openLetter(2)">
+                    <div class="letter-icon"><i class="fas fa-heart-circle-bolt"></i></div>
+                    <h3>لماذا أحبك؟</h3>
+                    <p>أسباب لا حصر لها...</p>
+                    <div class="letter-preview">"أسباب حبي لك أكثر من نجوم السماء..."</div>
+                </div>
+                
+                <div class="letter-card" onclick="openLetter(3)">
+                    <div class="letter-icon"><i class="fas fa-kiss-wink-heart"></i></div>
+                    <h3>وعودي لك</h3>
+                    <p>وعود من القلب...</p>
+                    <div class="letter-preview">"وعود أقطعها على نفسي من أجلك..."</div>
+                </div>
+                
+                <div class="letter-card" onclick="openLetter(4)">
+                    <div class="letter-icon"><i class="fas fa-star-and-crescent"></i></div>
+                    <h3>رسالة خاصة</h3>
+                    <p>لأجلك فقط...</p>
+                    <div class="letter-preview">"رسالة حب يومية جديدة كل يوم..."</div>
+                </div>
             </div>
-            
-            <div class="letter-card" onclick="openLetter(2)">
-                <div class="letter-icon"><i class="fas fa-heart-circle-bolt"></i></div>
-                <h3>لماذا أحبك؟</h3>
-                <p>أسباب لا حصر لها...</p>
-                <div class="letter-preview">"أسباب حبي لك أكثر من نجوم السماء..."</div>
-            </div>
-            
-            <div class="letter-card" onclick="openLetter(3)">
-                <div class="letter-icon"><i class="fas fa-kiss-wink-heart"></i></div>
-                <h3>وعودي لك</h3>
-                <p>وعود من القلب...</p>
-                <div class="letter-preview">"وعود أقطعها على نفسي من أجلك..."</div>
-            </div>
-            
-            <div class="letter-card" onclick="openLetter(4)">
-                <div class="letter-icon"><i class="fas fa-star-and-crescent"></i></div>
-                <h3>رسالة خاصة</h3>
-                <p>لأجلك فقط...</p>
-                <div class="letter-preview">"رسالة حب يومية جديدة كل يوم..."</div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="gallery" class="section dark-section">
-        <h2 class="section-title">ذكرياتنا الجميلة</h2>
-        <div class="gallery-container">
-            <div class="gallery-item" onclick="openLightbox('أول لقاء')">
-                <div class="gallery-image" style="background: linear-gradient(45deg, #ff4d8d, #ff9ec0);"></div>
-                <div class="gallery-overlay">
-                    <h3>أول لقاء</h3>
-                    <p>اليوم الذي بدأت فيه القصة</p>
+        <section id="gallery" class="section dark-section">
+            <h2 class="section-title">ذكرياتنا الجميلة</h2>
+            <div class="gallery-container">
+                <div class="gallery-item" onclick="openLightbox('أول لقاء')">
+                    <div class="gallery-image" style="background: linear-gradient(45deg, #ff4d8d, #ff9ec0);"></div>
+                    <div class="gallery-overlay">
+                        <h3>أول لقاء</h3>
+                        <p>اليوم الذي بدأت فيه القصة</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" onclick="openLightbox('يوم الخطوبة')">
+                    <div class="gallery-image" style="background: linear-gradient(45deg, #ffd700, #ff9ec0);"></div>
+                    <div class="gallery-overlay">
+                        <h3>يوم الخطوبة</h3>
+                        <p>وعد بالأبد</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" onclick="openLightbox('أجمل لحظات')">
+                    <div class="gallery-image" style="background: linear-gradient(45deg, #9ec0ff, #ff4d8d);"></div>
+                    <div class="gallery-overlay">
+                        <h3>أجمل لحظات</h3>
+                        <p>ذكريات لا تُنسى</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" onclick="openLightbox('أحلامنا')">
+                    <div class="gallery-image" style="background: linear-gradient(45deg, #4dffb8, #ff4d8d);"></div>
+                    <div class="gallery-overlay">
+                        <h3>أحلامنا</h3>
+                        <p>مستقبل نبنيه معًا</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="gallery-item" onclick="openLightbox('يوم الخطوبة')">
-                <div class="gallery-image" style="background: linear-gradient(45deg, #ffd700, #ff9ec0);"></div>
-                <div class="gallery-overlay">
-                    <h3>يوم الخطوبة</h3>
-                    <p>وعد بالأبد</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item" onclick="openLightbox('أجمل لحظات')">
-                <div class="gallery-image" style="background: linear-gradient(45deg, #9ec0ff, #ff4d8d);"></div>
-                <div class="gallery-overlay">
-                    <h3>أجمل لحظات</h3>
-                    <p>ذكريات لا تُنسى</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item" onclick="openLightbox('أحلامنا')">
-                <div class="gallery-image" style="background: linear-gradient(45deg, #4dffb8, #ff4d8d);"></div>
-                <div class="gallery-overlay">
-                    <h3>أحلامنا</h3>
-                    <p>مستقبل نبنيه معًا</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="timeline" class="section">
-        <h2 class="section-title">خط زمني لحبنا</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">يوم التعارف</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>بداية القصة</h3>
-                    <p>اليوم الذي التقينا فيه وتغيرت حياتي إلى الأبد، اليوم الذي عرفت فيه أن هناك إنسانة يمكنها أن تجعل العالم كله أجمل</p>
+        <section id="timeline" class="section">
+            <h2 class="section-title">خط زمني لحبنا</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">يوم التعارف</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>بداية القصة</h3>
+                        <p>اليوم الذي التقينا فيه وتغيرت حياتي إلى الأبد، اليوم الذي عرفت فيه أن هناك إنسانة يمكنها أن تجعل العالم كله أجمل</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">أول لقاء</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>بداية الحب</h3>
+                        <p>اللحظة التي عرفت فيها أنك نصيبي، اللحظة التي تأكدت فيها أن قلبي اختار صاحبه</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">يوم الخطوبة</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>وعد بالأبد</h3>
+                        <p>اليوم الذي وعدتك فيه بأن أكون لك إلى الأبد، اليوم الذي رسمنا فيه بداية طريقنا معًا</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">كل يوم</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>حب متجدد</h3>
+                        <p>كل يوم يمر أحبك أكثر، كل لحظة معك تزيدني تعلقًا بك وإيمانًا بأنك أفضل شيء حدث في حياتي</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">أول لقاء</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>بداية الحب</h3>
-                    <p>اللحظة التي عرفت فيها أنك نصيبي، اللحظة التي تأكدت فيها أن قلبي اختار صاحبه</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">يوم الخطوبة</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>وعد بالأبد</h3>
-                    <p>اليوم الذي وعدتك فيه بأن أكون لك إلى الأبد، اليوم الذي رسمنا فيه بداية طريقنا معًا</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">كل يوم</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>حب متجدد</h3>
-                    <p>كل يوم يمر أحبك أكثر، كل لحظة معك تزيدني تعلقًا بك وإيمانًا بأنك أفضل شيء حدث في حياتي</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="future" class="section dark-section">
-        <h2 class="section-title">مستقبلنا الجميل</h2>
-        <div class="future-container">
-            <div class="future-dream" onclick="showDream('home')">
-                <div class="dream-icon"><i class="fas fa-home"></i></div>
-                <h3>بيتنا</h3>
-                <p>البيت الذي سنملؤه حبًا وضحكات</p>
-                <div class="dream-details">
-                    <p>بيت صغير مليء بالحب، نافذة تطل على الحديقة، رائحة القهوة في الصباح، وضحكات تملأ الأرجاء</p>
+        <section id="future" class="section dark-section">
+            <h2 class="section-title">مستقبلنا الجميل</h2>
+            <div class="future-container">
+                <div class="future-dream" onclick="showDream('home')">
+                    <div class="dream-icon"><i class="fas fa-home"></i></div>
+                    <h3>بيتنا</h3>
+                    <p>البيت الذي سنملؤه حبًا وضحكات</p>
+                    <div class="dream-details">
+                        <p>بيت صغير مليء بالحب، نافذة تطل على الحديقة، رائحة القهوة في الصباح، وضحكات تملأ الأرجاء</p>
+                    </div>
+                </div>
+                
+                <div class="future-dream" onclick="showDream('children')">
+                    <div class="dream-icon"><i class="fas fa-baby"></i></div>
+                    <h3>أولادنا</h3>
+                    <p class="children-names">
+                        <span class="child-name">فريد</span>
+                        <span class="child-name">فريدة</span>
+                        <span class="child-name">فيروز</span>
+                    </p>
+                    <div class="dream-details">
+                        <p>ثلاثة أسماء لثلاثة أحلام، فريد القوي، فريدة الجميلة، فيروز النادرة، كلهم ثمرة حبنا</p>
+                    </div>
+                </div>
+                
+                <div class="future-dream" onclick="showDream('love')">
+                    <div class="dream-icon"><i class="fas fa-heart-circle-plus"></i></div>
+                    <h3>حبنا</h3>
+                    <p>حب يزداد مع كل يوم يمر</p>
+                    <div class="dream-details">
+                        <p>حب لا يعرف الشيخوخة، يزداد قوة مع الأيام، يصبح أكثر نضجًا وأكثر جمالًا مع كل عام</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="future-dream" onclick="showDream('children')">
-                <div class="dream-icon"><i class="fas fa-baby"></i></div>
-                <h3>أولادنا</h3>
-                <p class="children-names">
-                    <span class="child-name">فريد</span>
-                    <span class="child-name">فريدة</span>
-                    <span class="child-name">فيروز</span>
-                </p>
-                <div class="dream-details">
-                    <p>ثلاثة أسماء لثلاثة أحلام، فريد القوي، فريدة الجميلة، فيروز النادرة، كلهم ثمرة حبنا</p>
-                </div>
-            </div>
-            
-            <div class="future-dream" onclick="showDream('love')">
-                <div class="dream-icon"><i class="fas fa-heart-circle-plus"></i></div>
-                <h3>حبنا</h3>
-                <p>حب يزداد مع كل يوم يمر</p>
-                <div class="dream-details">
-                    <p>حب لا يعرف الشيخوخة، يزداد قوة مع الأيام، يصبح أكثر نضجًا وأكثر جمالًا مع كل عام</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="section interaction-section">
-        <h2 class="section-title">رسالة منك إلي</h2>
-        <div class="interaction-container">
-          
-            </div>
-            
-            <div class="love-meter">
-                <h3>مقياس حبنا</h3>
-                <div class="meter-bar">
-                    <div class="meter-fill" id="loveMeter">100%</div>
+        <section class="section interaction-section">
+            <h2 class="section-title">رسالة منك إلي</h2>
+            <div class="interaction-container">
+                <div class="message-box">
+                    <textarea id="user-message" placeholder="اكتبي رسالة حب هنا... وسأحفظها في قلبي إلى الأبد ❤️"></textarea>
+                    <button class="send-btn" onclick="saveMessage()">
+                        <i class="fas fa-paper-plane"></i> أرسلي رسالتك
+                    </button>
                 </div>
-                <button class="meter-btn" onclick="increaseLove()">
-                    <i class="fas fa-heart-circle-plus"></i> زيدي الحب
-                </button>
+                
+                <div class="love-meter">
+                    <h3>مقياس حبنا</h3>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="loveMeter">100%</div>
+                    </div>
+                    <button class="meter-btn" onclick="increaseLove()">
+                        <i class="fas fa-heart-circle-plus"></i> زيدي الحب
+                    </button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <div class="footer-content">
-            <div class="heart-beat">❤️</div>
-            <h3 class="footer-title">إلى حبيبة العمر</h3>
-            <p class="footer-message">صنع بكل الحب من أجل أروع إنسانة في حياتي</p>
-            
-            <div class="final-message">
-                <p>"ربنا يخليكي ليا، ويخلينا لبعض ويرزقنا بولادنا إن شاء الله"</p>
+        <footer>
+            <div class="footer-content">
+                <div class="heart-beat">❤️</div>
+                <h3 class="footer-title">إلى حبيبة العمر</h3>
+                <p class="footer-message">صنع بكل الحب من أجل أروع إنسانة في حياتي</p>
+                
+                <div class="final-message">
+                    <p>"ربنا يخليكي ليا، ويخلينا لبعض ويرزقنا بولادنا إن شاء الله"</p>
+                </div>
+                
+                <div class="social-icons">
+                    <span class="social-icon" onclick="showHeartEffect()"><i class="fas fa-heart"></i></span>
+                    <span class="social-icon" onclick="showKissEffect()"><i class="fas fa-kiss-beam"></i></span>
+                    <span class="social-icon" onclick="showStarEffect()"><i class="fas fa-star"></i></span>
+                    <span class="social-icon" onclick="showFlowerEffect()"><i class="fas fa-spa"></i></span>
+                </div>
+                
+                <div class="footer-info">
+                    <div class="copyright">
+                        © 2024 - هدية من القلب إلى القلب
+                    </div>
+                    <div class="made-with">
+                        صنع بـ <i class="fas fa-heart" style="color: #ff4d8d;"></i> من أجلك
+                    </div>
+                </div>
             </div>
-            
-            <div class="social-icons">
-                <span class="social-icon" onclick="showHeartEffect()"><i class="fas fa-heart"></i></span>
-                <span class="social-icon" onclick="showKissEffect()"><i class="fas fa-kiss-beam"></i></span>
-                <span class="social-icon" onclick="showStarEffect()"><i class="fas fa-star"></i></span>
-                <span class="social-icon" onclick="showFlowerEffect()"><i class="fas fa-spa"></i></span>
-            </div>
-      
-        </div>
-    </footer>
+        </footer>
 
-    <div id="letter-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modal-body"></div>
-            <div class="modal-actions">
-                <button class="modal-btn" onclick="printLetter()">
-                    <i class="fas fa-print"></i> طباعة الرسالة
-                </button>
-                <button class="modal-btn" onclick="saveLetter()">
-                    <i class="fas fa-download"></i> حفظ الرسالة
-                </button>
+        <div id="letter-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div id="modal-body"></div>
+                <div class="modal-actions">
+                    <button class="modal-btn" onclick="printLetter()">
+                        <i class="fas fa-print"></i> طباعة الرسالة
+                    </button>
+                    <button class="modal-btn" onclick="saveLetter()">
+                        <i class="fas fa-download"></i> حفظ الرسالة
+                    </button>
+                </div>
             </div>
         </div>
+
+        <div id="lightbox" class="lightbox">
+            <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+            <div class="lightbox-content">
+                <img id="lightbox-img" src="" alt="">
+                <div class="lightbox-caption" id="lightbox-caption"></div>
+            </div>
+        </div>
+
+        <div id="effects-container"></div>
     </div>
 
-    <div id="lightbox" class="lightbox">
-        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
-        <div class="lightbox-content">
-            <img id="lightbox-img" src="" alt="">
-            <div class="lightbox-caption" id="lightbox-caption"></div>
-        </div>
-    </div>
-
-    <div id="effects-container"></div>
-
-    <!-- ===== JavaScript كامل مع تحكم الفيديو ===== -->
+    <!-- ===== JavaScript مع نظام رقم السري ===== -->
     <script>
         // البيانات الأساسية
         const loveData = {
@@ -1909,9 +2141,156 @@
         let loveLevel = 100;
         let videoPlaying = false;
         let videoMuted = false;
+        
+        // متغيرات نظام الرقم السري
+        const correctPassword = "1111";
+        let attemptsLeft = 3;
+        let isLocked = false;
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
+            // تحديث عرض المحاولات المتبقية
+            updateAttemptsDisplay();
+            
+            // جعل حقل إدخال الرقم السري يركز تلقائيًا
+            document.getElementById('password-input').focus();
+            
+            // السماح بإدخال الرقم السري عند الضغط على Enter
+            document.getElementById('password-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+
+        // ===== دوال نظام الرقم السري =====
+
+        // التحقق من الرقم السري
+        function checkPassword() {
+            if (isLocked) return;
+            
+            const passwordInput = document.getElementById('password-input');
+            const enteredPassword = passwordInput.value;
+            const hintElement = document.getElementById('password-hint');
+            
+            if (enteredPassword === correctPassword) {
+                // الرقم السري صحيح
+                unlockWebsite();
+            } else {
+                // الرقم السري خاطئ
+                attemptsLeft--;
+                updateAttemptsDisplay();
+                
+                if (attemptsLeft <= 0) {
+                    lockWebsite();
+                } else {
+                    // عرض رسالة خطأ
+                    hintElement.textContent = '❌ الرقم السري غير صحيح! حاولي مرة أخرى.';
+                    hintElement.classList.add('show');
+                    
+                    // تأثير اهتزاز
+                    passwordInput.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        passwordInput.style.animation = '';
+                    }, 500);
+                    
+                    // مسح الحقل
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    
+                    // إخفاء التلميح بعد 3 ثواني
+                    setTimeout(() => {
+                        hintElement.classList.remove('show');
+                    }, 3000);
+                }
+            }
+        }
+
+        // تحديث عرض المحاولات المتبقية
+        function updateAttemptsDisplay() {
+            document.getElementById('attempts-count').textContent = attemptsLeft;
+            
+            // تغيير اللون حسب عدد المحاولات
+            const attemptsElement = document.getElementById('attempts-count');
+            if (attemptsLeft === 3) {
+                attemptsElement.style.color = '#4CAF50'; // أخضر
+            } else if (attemptsLeft === 2) {
+                attemptsElement.style.color = '#FF9800'; // برتقالي
+            } else if (attemptsLeft === 1) {
+                attemptsElement.style.color = '#F44336'; // أحمر
+            }
+        }
+
+        // فتح الموقع بعد إدخال الرقم السري الصحيح
+        function unlockWebsite() {
+            const protectionScreen = document.getElementById('password-protection');
+            const websiteContent = document.getElementById('website-content');
+            
+            // إضافة تأثير اختفاء
+            protectionScreen.classList.add('fade-out');
+            
+            // إظهار الموقع بعد التأثير
+            setTimeout(() => {
+                protectionScreen.style.display = 'none';
+                websiteContent.style.display = 'block';
+                
+                // تفعيل جميع أقسام الموقع
+                activateWebsiteSections();
+                
+                // بدء الموسيقى تلقائيًا
+                startWebsite();
+            }, 500);
+        }
+
+        // تأمين الموقع بعد تجاوز المحاولات
+        function lockWebsite() {
+            isLocked = true;
+            const passwordInput = document.getElementById('password-input');
+            const passwordBtn = document.querySelector('.password-btn');
+            const hintElement = document.getElementById('password-hint');
+            
+            // تعطيل الحقل والزر
+            passwordInput.disabled = true;
+            passwordBtn.disabled = true;
+            
+            // عرض رسالة القفل
+            hintElement.textContent = '🔒 تم قفل الموقع مؤقتًا! حاولي مرة أخرى بعد دقيقة.';
+            hintElement.classList.add('show');
+            
+            // تغيير لون الزر
+            passwordBtn.style.background = '#666';
+            passwordBtn.style.cursor = 'not-allowed';
+            
+            // إعادة المحاولات بعد دقيقة
+            setTimeout(() => {
+                isLocked = false;
+                attemptsLeft = 3;
+                updateAttemptsDisplay();
+                
+                passwordInput.disabled = false;
+                passwordBtn.disabled = false;
+                passwordBtn.style.background = '';
+                passwordBtn.style.cursor = 'pointer';
+                
+                hintElement.classList.remove('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }, 60000); // دقيقة واحدة
+        }
+
+        // تفعيل أقسام الموقع
+        function activateWebsiteSections() {
+            document.querySelector('.navbar').classList.add('active');
+            document.querySelector('.hero').classList.add('active');
+            document.querySelector('.video-section').classList.add('active');
+            
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('active');
+            });
+            
+            document.querySelector('footer').classList.add('active');
+            
             // إعداد التمرير السلس
             setupSmoothScroll();
             
@@ -1924,7 +2303,7 @@
             // عرض رسالة ترحيبية بعد تحميل الصفحة
             setTimeout(() => {
                 showLoveMessage();
-            }, 2000);
+            }, 1000);
             
             // إعداد الموسيقى
             const music = document.getElementById('love-music');
@@ -1932,7 +2311,29 @@
             
             // إعداد الفيديو
             setupVideo();
-        });
+        }
+
+        // بدء تشغيل الموقع بعد فتحه
+        function startWebsite() {
+            // تأثيرات دخول
+            createFloatingEffect('❤️', 'heart');
+            createFloatingEffect('✨', 'star');
+            createFloatingEffect('🎉', 'flower');
+            
+            // رسالة ترحيب
+            setTimeout(() => {
+                alert('🎊 أهلاً وسهلاً بكِ في عالم حبنا الخاص! ❤️\nهذه هديتي لكِ من القلب إلى القلب.');
+            }, 1000);
+        }
+
+        // التحقق من إدخال أرقام فقط
+        function isNumber(event) {
+            const charCode = event.which ? event.which : event.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
 
         // ===== دوال الفيديو =====
 
